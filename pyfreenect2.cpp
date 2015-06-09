@@ -1,4 +1,5 @@
 #include <Python.h>
+#include <numpy/arrayobject.h>
 
 #include "src/Freenect2.hpp"
 #include "src/Freenect2Device.hpp"
@@ -39,4 +40,5 @@ static PyMethodDef pyfreenect2Methods[] = {
 
 PyMODINIT_FUNC init_pyfreenect2() {
 	Py_InitModule("_pyfreenect2", pyfreenect2Methods);
+	import_array();
 }

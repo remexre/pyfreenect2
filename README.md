@@ -9,8 +9,8 @@ TODO List
 ---------
 
  * Implement Registration
- * Implement Frame
  * Make the pipeline argument of Freenect2Device's constructor actually do something
  * Make `test.py` actually display the frames
+ * Test everything
 
 You can probably find more TODOs in [Issues](https://github.com/tikiking1/pyfreenect2/issues) or by `grep -R TODO .`.
