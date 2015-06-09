@@ -36,6 +36,7 @@ print "Kinect firmware: %s" % kinect.firmware_version
 registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_camera_params)
 
 # Main loop
+cv2.startWindowThread()
 while not shutdown:
 	frames = frameListener.waitForNewFrame()
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
@@ -43,7 +44,7 @@ while not shutdown:
 	depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
 
 	# TODO Display the frames w/ OpenCV
-	cv2.imshow("RGB", cv2.Mat(rgbFrame.height, rgbFrame.width, cv2.CV_8UC3, rgbFrame.data))
+	cv2.imshow("RGB", rgbFrame.getData())
     # cv::imshow("rgb", cv::Mat(rgb->height, rgb->width, CV_8UC3, rgb->data));
     # cv::imshow("ir", cv::Mat(ir->height, ir->width, CV_32FC1, ir->data) / 20000.0f);
     # cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
