@@ -26,14 +26,14 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "SyncMultiFrameListener_new", py_SyncMultiFrameListener_new, METH_VARARGS, NULL },
 	{ "SyncMultiFrameListener_waitForNewFrame", py_SyncMultiFrameListener_waitForNewFrame, METH_VARARGS, NULL },
 	// Registration
-//	{ "Registration_new", py_Registration_new, METH_VARARGS, NULL },
-//	{ "Registration_apply", py_Registration_apply, METH_VARARGS, NULL },
+	{ "Registration_new", py_Registration_new, METH_VARARGS, NULL },
+	{ "Registration_apply", py_Registration_apply, METH_VARARGS, NULL },
 	// FrameMap
 	{ "FrameMap_getFrame", py_FrameMap_getFrame, METH_VARARGS, NULL },
 	// Frame
-//	{ "Frame_getHeight", py_Frame_getHeight, METH_VARARGS, NULL },
-//	{ "Frame_getWidth", py_Frame_getWidth, METH_VARARGS, NULL },
-//	{ "Frame_getData", py_Frame_getData, METH_VARARGS, NULL },
+	{ "Frame_getHeight", py_Frame_getHeight, METH_VARARGS, NULL },
+	{ "Frame_getWidth", py_Frame_getWidth, METH_VARARGS, NULL },
+	{ "Frame_getData", py_Frame_getData, METH_VARARGS, NULL },
 	// Sentinel
 	{ NULL, NULL, 0, NULL}
 };
