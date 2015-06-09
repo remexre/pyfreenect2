@@ -1,0 +1,4 @@
+build/
+dist/
+pyfreenect2.egg-info/
+*.pyc
