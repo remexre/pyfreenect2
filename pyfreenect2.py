@@ -100,3 +100,13 @@ class Frame:
 		return _pyfreenect2.Frame_getWidth(self._capsule)
 	def getData(self):
 		return _pyfreenect2.Frame_getData(self._capsule)
+
+################################################################################
+#                                 Registration                                 #
+################################################################################
+
+class Registration:
+	def __init__(self, ir_camera_params, color_camera_params):
+		self._capsule = _pyfreenect2.Registration_new(ir_camera_params, color_camera_params)
+	def apply(self, rgbFrame, depthFrame):
+		return _pyfreenect2.Registration_apply(self._capsule, rgbFrame, depthFrame)
