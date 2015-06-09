@@ -35,8 +35,13 @@ print "Kinect firmware: %s" % kinect.firmware_version
 # What's a registration?
 registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_camera_params)
 
-# Main loop
+# Initialize OpenCV stuff
 cv2.startWindowThread()
+cv2.namedWindow("RGB")
+# cv2.namedWindow("IR")
+# cv2.namedWindow("Depth")
+
+# Main loop
 while not shutdown:
 	frames = frameListener.waitForNewFrame()
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
