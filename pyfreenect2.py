@@ -25,6 +25,6 @@ def getDefaultDeviceSerialNumber():
 
 class Freenect2Device:
 	def __init__(self, serialNumber, pipeline=None):
-		self._state = _pyfreenect2.new_freenect2Device(serialNumber)
 		if pipeline is not None:
 			raise DeveloperIsALazyBastardError("pyfreenect2.PacketPipeline is not yet implemented")
+		self._blob = _pyfreenect2.Freenect2Device_new(serialNumber)

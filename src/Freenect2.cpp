@@ -1,10 +1,9 @@
 #include "Freenect2.hpp"
 
-#include <string>
+using libfreenect2::Freenect2;
 
-#include <libfreenect2/libfreenect2.hpp>
-
-libfreenect2::Freenect2 freenect2;
+Freenect2 freenect2;
+Freenect2& getGlobalFreenect2() { return freenect2; }
 
 PyObject *py_numberOfDevices(PyObject *self, PyObject *args) {
 	if(!PyArg_ParseTuple(args, ""))
