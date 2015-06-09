@@ -16,4 +16,5 @@ libfreenect2_module = Extension("_pyfreenect2",
 
 setup(name="pyfreenect2",
 	ext_modules=[libfreenect2_module],
-	py_modules=["pyfreenect2"])
+	py_modules=["pyfreenect2"],
+	install_requires=["numpy"])
