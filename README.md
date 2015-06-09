@@ -8,7 +8,6 @@ For usage, see `test.py`. To install, run `sudo python2 setup.py install`.
 TODO List
 ---------
 
- * Implement Freenect2Device
  * Implement SyncMultiFrameListener
  * Implement Registration
  * Implement FrameMap
