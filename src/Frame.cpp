@@ -1,8 +1,4 @@
-#include "Frame.hpp"
-
-#include <string>
-#include <libfreenect2/libfreenect2.hpp>
-#include <numpy/arrayobject.h>
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::Frame;
 

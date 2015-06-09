@@ -1,7 +1,4 @@
-#include "FrameMap.hpp"
-#include "Frame.hpp"
-
-#include <libfreenect2/frame_listener_impl.h>
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::Frame;
 using libfreenect2::FrameMap;

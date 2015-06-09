@@ -1,6 +1,4 @@
-#include "Freenect2Device.hpp"
-
-#include "Freenect2.hpp"
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::Freenect2Device;
 using libfreenect2::FrameListener;

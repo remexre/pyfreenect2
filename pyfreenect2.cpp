@@ -1,12 +1,4 @@
-#include <Python.h>
-#include <numpy/arrayobject.h>
-
-#include "src/Freenect2.hpp"
-#include "src/Freenect2Device.hpp"
-#include "src/SyncMultiFrameListener.hpp"
-#include "src/Registration.hpp"
-#include "src/FrameMap.hpp"
-#include "src/Frame.hpp"
+#include "pyfreenect2.hpp"
 
 static PyMethodDef pyfreenect2Methods[] = {
 	// Freenect2

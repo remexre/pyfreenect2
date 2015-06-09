@@ -1,8 +1,4 @@
-#include "Registration.hpp"
-
-#include <string>
-#include <libfreenect2/libfreenect2.hpp>
-#include <libfreenect2/registration.h>
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::Freenect2Device;
 using libfreenect2::Registration;

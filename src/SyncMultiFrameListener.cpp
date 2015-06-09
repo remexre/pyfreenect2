@@ -1,7 +1,4 @@
-#include "SyncMultiFrameListener.hpp"
-#include "FrameMap.hpp"
-
-#include <libfreenect2/frame_listener_impl.h>
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::FrameMap;
 using libfreenect2::SyncMultiFrameListener;

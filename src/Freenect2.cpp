@@ -1,4 +1,4 @@
-#include "Freenect2.hpp"
+#include "../pyfreenect2.hpp"
 
 using libfreenect2::Freenect2;
 
