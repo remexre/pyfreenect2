@@ -54,3 +54,16 @@ class Freenect2Device:
 	@property
 	def ir_camera_params(self):
 		return _pyfreenect2.Freenect2Device_getIRCameraParams(self._capsule)
+
+################################################################################
+#                            SyncMultiFrameListener                            #
+################################################################################
+
+class SyncMultiFrameListener:
+	def __init__(self, *args):
+		types = 0
+		for arg in args:
+			types |= int(arg)
+		self._capsule = _pyfreenect2.SyncMultiFrameListener_new(types)
+	def waitForNewFrame(self):
+		return FrameMap(_pyfreenect2.SyncMultiFrameListener_waitForNewFrame(self._capsule))
