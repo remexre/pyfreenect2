@@ -60,7 +60,21 @@ PyObject *py_Freenect2Device_setIrAndDepthFrameListener(PyObject *self, PyObject
 	return Py_None;
 }
 
-// PyObject *py_Freenect2Device_getSerialNumber(PyObject *self, PyObject *args);
-// PyObject *py_Freenect2Device_getFirmwareVersion(PyObject *self, PyObject *args);
+PyObject *py_Freenect2Device_getSerialNumber(PyObject *self, PyObject *args) {
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
+		return NULL;
+	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+	std::string serialNumber = device->getSerialNumber();
+	return PyString_FromString(serialNumber.c_str());
+}
+PyObject *py_Freenect2Device_getFirmwareVersion(PyObject *self, PyObject *args) {
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
+		return NULL;
+	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+	std::string firmwareVersion = device->getFirmwareVersion();
+	return PyString_FromString(firmwareVersion.c_str());
+}
 // PyObject *py_Freenect2Device_getIRCameraParams(PyObject *self, PyObject *args);
 // PyObject *py_Freenect2Device_getColorCameraParams(PyObject *self, PyObject *args);

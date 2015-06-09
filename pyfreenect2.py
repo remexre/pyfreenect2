@@ -42,3 +42,9 @@ class Freenect2Device:
 			raise TypeError("Argument to Freenect2Device.setIrAndDepthFrameListener must be of type Freenect2Device.FrameListener")
 		else:
 			_pyfreenect2.Freenect2Device_setIrAndDepthFrameListener(self._blob, listener._blob)
+	@property
+	def serial_number(self):
+		return _pyfreenect2.Freenect2Device_getSerialNumber(self._blob)
+	@property
+	def firmware_version(self):
+		return _pyfreenect2.Freenect2Device_getFirmwareVersion(self._blob)
