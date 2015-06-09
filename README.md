@@ -9,7 +9,6 @@ TODO List
 ---------
 
  * Implement Registration
- * Implement FrameMap
  * Implement Frame
  * Make the pipeline argument of Freenect2Device's constructor actually do something
  * Make `test.py` actually display the frames

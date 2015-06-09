@@ -67,3 +67,19 @@ class SyncMultiFrameListener:
 		self._capsule = _pyfreenect2.SyncMultiFrameListener_new(types)
 	def waitForNewFrame(self):
 		return FrameMap(_pyfreenect2.SyncMultiFrameListener_waitForNewFrame(self._capsule))
+
+
+################################################################################
+#                                   FrameMap                                   #
+################################################################################
+
+class FrameMap:
+	def __init__(self, capsule):
+		print "DEBUG: FrameMap capsule type = %s" % type(capsule)
+		self._capsule = capsule
+	def getFrame(self, frame_type):
+		# If frame_type is not a power of 2...
+		if not frame_type in (1, 2, 4):
+			raise ValueError("frame_type must be one of Frame.COLOR, Frame.IR, or Frame.DEPTH")
+		else:
+			return Frame(_pyfreenect2.FrameMap_getFrame(self._capsule, frame_type))
