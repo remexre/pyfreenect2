@@ -14,23 +14,23 @@ PyObject *py_Freenect2Device_new(PyObject *self, PyObject *args) {
 	Freenect2Device *device = getGlobalFreenect2().openDevice(serialNumber);
 	return PyCapsule_New(device, "Freenect2Device", py_Freenect2Device_destroy);
 }
-void py_Freenect2Device_destroy(PyObject *capsule) {
-	((Freenect2Device*) PyCapsule_GetPointer(capsule, "Freenect2Device"))->close();
+void py_Freenect2Device_destroy(PyObject *deviceCapsule) {
+	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->close();
 }
 
 PyObject *py_Freenect2Device_start(PyObject *self, PyObject *args) {
-	PyObject *capsule = NULL;
-	if(!PyArg_ParseTuple(args, "O", &capsule))
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
 		return NULL;
-	((Freenect2Device*) PyCapsule_GetPointer(capsule, "Freenect2Device"))->start();
+	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->start();
 	Py_INCREF(Py_None);
 	return Py_None;
 }
 PyObject *py_Freenect2Device_stop(PyObject *self, PyObject *args) {
-	PyObject *capsule = NULL;
-	if(!PyArg_ParseTuple(args, "O", &capsule))
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
 		return NULL;
-	((Freenect2Device*) PyCapsule_GetPointer(capsule, "Freenect2Device"))->stop();
+	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->stop();
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -76,5 +76,27 @@ PyObject *py_Freenect2Device_getFirmwareVersion(PyObject *self, PyObject *args) 
 	std::string firmwareVersion = device->getFirmwareVersion();
 	return PyString_FromString(firmwareVersion.c_str());
 }
-// PyObject *py_Freenect2Device_getIRCameraParams(PyObject *self, PyObject *args);
-// PyObject *py_Freenect2Device_getColorCameraParams(PyObject *self, PyObject *args);
+
+PyObject *py_Freenect2Device_getColorCameraParams(PyObject *self, PyObject *args) {
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
+		return NULL;
+	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+	Freenect2Device::ColorCameraParams *colorCameraParams = new Freenect2Device::ColorCameraParams;
+	return PyCapsule_New(colorCameraParams, "ColorCameraParams", py_Freenect2Device_ColorCameraParams_destroy);
+}
+PyObject *py_Freenect2Device_getIRCameraParams(PyObject *self, PyObject *args) {
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
+		return NULL;
+	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+	Freenect2Device::IrCameraParams *irCameraParams = new Freenect2Device::IrCameraParams;
+	return PyCapsule_New(irCameraParams, "IRCameraParams", py_Freenect2Device_IRCameraParams_destroy);
+}
+
+void py_Freenect2Device_ColorCameraParams_destroy(PyObject *colorCameraParamsCapsule) {
+	delete ((Freenect2Device::ColorCameraParams*) PyCapsule_GetPointer(colorCameraParamsCapsule, "ColorCameraParams"));
+}
+void py_Freenect2Device_IRCameraParams_destroy(PyObject *irCameraParamsCapsule) {
+	delete ((Freenect2Device::IrCameraParams*) PyCapsule_GetPointer(irCameraParamsCapsule, "IRCameraParams"));
+}

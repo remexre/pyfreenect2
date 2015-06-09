@@ -19,8 +19,8 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "Freenect2Device_setIrAndDepthFrameListener", py_Freenect2Device_setIrAndDepthFrameListener, METH_VARARGS, NULL },
 	{ "Freenect2Device_getSerialNumber", py_Freenect2Device_getSerialNumber, METH_VARARGS, NULL },
 	{ "Freenect2Device_getFirmwareVersion", py_Freenect2Device_getFirmwareVersion, METH_VARARGS, NULL },
-	{ "Freenect2Device_getIRCameraParams", py_Freenect2Device_getIRCameraParams, METH_VARARGS, NULL },
 	{ "Freenect2Device_getColorCameraParams", py_Freenect2Device_getColorCameraParams, METH_VARARGS, NULL },
+	{ "Freenect2Device_getIRCameraParams", py_Freenect2Device_getIRCameraParams, METH_VARARGS, NULL },
 	// SyncMultiFrameListener
 	{ "SyncMultiFrameListener_new", py_SyncMultiFrameListener_new, METH_VARARGS, NULL },
 	{ "SyncMultiFrameListener_waitForNewFrame", py_SyncMultiFrameListener_waitForNewFrame, METH_VARARGS, NULL },

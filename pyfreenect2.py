@@ -27,24 +27,30 @@ class Freenect2Device:
 	def __init__(self, serialNumber, pipeline=None):
 		if pipeline is not None:
 			raise DeveloperIsALazyBastardError("pyfreenect2.PacketPipeline is not yet implemented")
-		self._blob = _pyfreenect2.Freenect2Device_new(serialNumber)
+		self._capsule = _pyfreenect2.Freenect2Device_new(serialNumber)
 	def start(self):
-		_pyfreenect2.Freenect2Device_start(self._blob)
+		_pyfreenect2.Freenect2Device_start(self._capsule)
 	def stop(self):
-		_pyfreenect2.Freenect2Device_stop(self._blob)
+		_pyfreenect2.Freenect2Device_stop(self._capsule)
 	def setColorFrameListener(self, listener):
 		if not type(listener) is FrameListener:
 			raise TypeError("Argument to Freenect2Device.setColorFrameListener must be of type Freenect2Device.FrameListener")
 		else:
-			_pyfreenect2.Freenect2Device_setColorFrameListener(self._blob, listener._blob)
+			_pyfreenect2.Freenect2Device_setColorFrameListener(self._capsule, listener._capsule)
 	def setIrAndDepthFrameListener(self, listener):
 		if not type(listener) is FrameListener:
 			raise TypeError("Argument to Freenect2Device.setIrAndDepthFrameListener must be of type Freenect2Device.FrameListener")
 		else:
-			_pyfreenect2.Freenect2Device_setIrAndDepthFrameListener(self._blob, listener._blob)
+			_pyfreenect2.Freenect2Device_setIrAndDepthFrameListener(self._capsule, listener._capsule)
 	@property
 	def serial_number(self):
-		return _pyfreenect2.Freenect2Device_getSerialNumber(self._blob)
+		return _pyfreenect2.Freenect2Device_getSerialNumber(self._capsule)
 	@property
 	def firmware_version(self):
-		return _pyfreenect2.Freenect2Device_getFirmwareVersion(self._blob)
+		return _pyfreenect2.Freenect2Device_getFirmwareVersion(self._capsule)
+	@property
+	def color_camera_params(self):
+		return _pyfreenect2.Freenect2Device_getColorCameraParams(self._capsule)
+	@property
+	def ir_camera_params(self):
+		return _pyfreenect2.Freenect2Device_getIRCameraParams(self._capsule)
