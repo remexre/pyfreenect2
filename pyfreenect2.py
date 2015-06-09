@@ -28,3 +28,7 @@ class Freenect2Device:
 		if pipeline is not None:
 			raise DeveloperIsALazyBastardError("pyfreenect2.PacketPipeline is not yet implemented")
 		self._blob = _pyfreenect2.Freenect2Device_new(serialNumber)
+	def start(self):
+		_pyfreenect2.Freenect2Device_start(self._blob)
+	def stop(self):
+		_pyfreenect2.Freenect2Device_stop(self._blob)

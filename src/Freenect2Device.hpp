@@ -3,7 +3,7 @@
 #include <Python.h>
 
 PyObject *py_Freenect2Device_new(PyObject *self, PyObject *args);
-void py_Freenect2Device_destroy(PyObject *object);
+void py_Freenect2Device_destroy(PyObject *capsule);
 
 PyObject *py_Freenect2Device_start(PyObject *self, PyObject *args);
 PyObject *py_Freenect2Device_stop(PyObject *self, PyObject *args);
