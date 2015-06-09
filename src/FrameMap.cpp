@@ -6,12 +6,6 @@
 using libfreenect2::Frame;
 using libfreenect2::FrameMap;
 
-PyObject *py_FrameMap_new(PyObject *self, PyObject *args) {
-	if(!PyArg_ParseTuple(args, ""))
-		return NULL;
-	FrameMap *frameMap = new FrameMap;
-	return PyCapsule_New(frameMap, "FrameMap", py_FrameMap_destroy);
-}
 void py_FrameMap_destroy(PyObject *frameMapCapsule) {
 	delete ((FrameMap*) PyCapsule_GetPointer(frameMapCapsule, "FrameMap"));
 }

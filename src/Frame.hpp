@@ -2,7 +2,6 @@
 
 #include <Python.h>
 
-PyObject *py_Frame_new(PyObject *self, PyObject *args);
 void py_Frame_destroy(PyObject *object);
 
 PyObject *py_Frame_getHeight(PyObject *self, PyObject *args);

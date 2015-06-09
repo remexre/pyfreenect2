@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 import cv2
+import signal
 import pyfreenect2
 
 # This is pretty much a straight port of the Protonect program bundled with
