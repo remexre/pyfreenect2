@@ -28,16 +28,37 @@ PyObject *py_Frame_getData(PyObject *self, PyObject *args) {
 	if(!PyArg_ParseTuple(args, "O", &frameCapsule))
 		return NULL;
 	Frame *frame = (Frame*) PyCapsule_GetPointer(frameCapsule, "Frame");
+
+	// frames are apparently 4 channel (4 bytes per pixel)
 	npy_intp dims[] = {frame->height, frame->width, 4 };
 
+	// this should be elsewhere, however, fails without it.
 	import_array();
-	//	PyArrayObject *array = (PyArrayObject*) PyArray_SimpleNew(3, dims, NPY_UINT8);
-	//memcpy(PyArray_DATA(array), frame->data, PyArray_NBYTES(array));
-	std::cout << "bpp: " << frame->bytes_per_pixel;
+
 	PyArrayObject *array = (PyArrayObject*) PyArray_SimpleNewFromData(3, 
 									  dims, 
 									  NPY_UINT8,
 									  frame->data);
 
+	return (PyObject*) array;
+}
+
+PyObject *py_Frame_getDepthData(PyObject *self, PyObject *args)
+{
+
+	PyObject *frameCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &frameCapsule))
+		return NULL;
+	Frame *frame = (Frame*) PyCapsule_GetPointer(frameCapsule, "Frame");
+
+	npy_intp dims[] = {frame->height, frame->width, 4};
+
+	import_array();
+
+	std::cout << "bpp: " << frame->bytes_per_pixel << std::endl;
+	PyArrayObject *array = (PyArrayObject*) PyArray_SimpleNewFromData(3, 
+									  dims, 
+									  NPY_UINT8,
+									  frame->data);
 	return (PyObject*) array;
 }

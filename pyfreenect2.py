@@ -97,8 +97,12 @@ class Frame:
 		return _pyfreenect2.Frame_getHeight(self._capsule)
 	def getWidth(self):
 		return _pyfreenect2.Frame_getWidth(self._capsule)
-	def getData(self):
+	def getRGBData(self):
+                print "getting data"
 		return _pyfreenect2.Frame_getData(self._capsule)
+	def getDepthData(self):
+                print "getting data"
+		return _pyfreenect2.Frame_getDepthData(self._capsule)
 
 ################################################################################
 #                                 Registration                                 #

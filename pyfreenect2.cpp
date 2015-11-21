@@ -27,6 +27,7 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "Frame_getHeight", py_Frame_getHeight, METH_VARARGS, NULL },
 	{ "Frame_getWidth", py_Frame_getWidth, METH_VARARGS, NULL },
 	{ "Frame_getData", py_Frame_getData, METH_VARARGS, NULL },
+	{ "Frame_getDepthData", py_Frame_getDepthData, METH_VARARGS, NULL },
 	// Sentinel
 	{ NULL, NULL, 0, NULL}
 };

@@ -46,7 +46,7 @@ registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_ca
 cv2.startWindowThread()
 cv2.namedWindow("RGB")
 # cv2.namedWindow("IR")
-# cv2.namedWindow("Depth")
+cv2.namedWindow("Depth")
 
 # Main loop
 while not shutdown:
@@ -55,23 +55,19 @@ while not shutdown:
         print "got frame"
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
 #	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
-#	depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
+        depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
 
-        data = rgbFrame.getData()
+        rgb_frame = rgbFrame.getRGBData()
+        depth_frame = depthFrame.getDepthData()
+#        depth_frame = frames.getFrame(pyfreenect2.Frame.DEPTH).getData()
+
+        rgb_frame_resize = scipy.misc.imresize(rgb_frame, size = .5)
+        depth_frame_resize = scipy.misc.imresize(depth_frame, size = .5)
 
 	# TODO Display the frames w/ OpenCV
-	cv2.imshow("RGB", data)
+	cv2.imshow("RGB", rgb_frame_resize)
+	cv2.imshow("Depth", depth_frame_resize)
         cv2.waitKey(20)
-
-    # cv::imshow("ir", cv::Mat(ir->height, ir->width, CV_32FC1, ir->data) / 20000.0f);
-    # cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
-
-    # if (!registered) registered = new unsigned char[depth->height*depth->width*rgb->bytes_per_pixel];
-    # registration->apply(rgb,depth,registered);
-    # cv::imshow("registered", cv::Mat(depth->height, depth->width, CV_8UC3, registered));
-
-    # int key = cv::waitKey(1);
-    # protonect_shutdown = protonect_shutdown || (key > 0 && ((key & 0xFF) == 27)); // shutdown on escape
 
 kinect.stop()
 kinect.close()
