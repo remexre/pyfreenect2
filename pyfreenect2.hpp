@@ -3,6 +3,7 @@
 #include <Python.h>
 #include <string>
 #include <libfreenect2/libfreenect2.hpp>
+#include <libfreenect2/logger.h>
 #include <libfreenect2/frame_listener_impl.h>
 #include <libfreenect2/registration.h>
 #include <numpy/arrayobject.h>

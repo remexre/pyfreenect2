@@ -1,4 +1,5 @@
 #include "../pyfreenect2.hpp"
+#include <iostream>
 
 using libfreenect2::Freenect2Device;
 using libfreenect2::FrameListener;
@@ -39,8 +40,14 @@ PyObject *py_Freenect2Device_setColorFrameListener(PyObject *self, PyObject *arg
 	if(!PyArg_ParseTuple(args, "OO", &deviceCapsule, &listenerCapsule))
 		return NULL;
 	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+
+	std::cout << "device in F2D.cpp: " << device << std::endl;
+	std::cout << "listenercapsule in F2D.cpp: " << listenerCapsule << std::endl;
 	Py_INCREF(listenerCapsule);
-	FrameListener *listener = (FrameListener*) PyCapsule_GetPointer(listenerCapsule, "FrameListener");
+	FrameListener *listener = (FrameListener*) PyCapsule_GetPointer(listenerCapsule, "SyncMultiFrameListener");
+
+	///// BOOO!!!
+	std::cout << "listener in F2D.cpp: " << listener << std::endl;
 	device->setColorFrameListener(listener);
 	Py_INCREF(Py_None);
 	return Py_None;
@@ -52,7 +59,7 @@ PyObject *py_Freenect2Device_setIrAndDepthFrameListener(PyObject *self, PyObject
 		return NULL;
 	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
 	Py_INCREF(listenerCapsule);
-	FrameListener *listener = (FrameListener*) PyCapsule_GetPointer(listenerCapsule, "FrameListener");
+	FrameListener *listener = (FrameListener*) PyCapsule_GetPointer(listenerCapsule, "SyncMultiFrameListener");
 	device->setIrAndDepthFrameListener(listener);
 	Py_INCREF(Py_None);
 	return Py_None;

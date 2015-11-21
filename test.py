@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
-import cv2
+import cv2, cv
+import scipy.misc
 import signal
 import pyfreenect2
 
@@ -22,6 +23,8 @@ signal.signal(signal.SIGINT, sigint_handler)
 frameListener = pyfreenect2.SyncMultiFrameListener(pyfreenect2.Frame.COLOR,
 	pyfreenect2.Frame.IR,
 	pyfreenect2.Frame.DEPTH)
+
+print frameListener
 kinect.setColorFrameListener(frameListener)
 kinect.setIrAndDepthFrameListener(frameListener)
 
@@ -33,7 +36,11 @@ print "Kinect serial: %s" % kinect.serial_number
 print "Kinect firmware: %s" % kinect.firmware_version
 
 # What's a registration?
+print kinect.ir_camera_params
+
 registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_camera_params)
+#registration = pyfreenect2.Registration(kinect.color_camera_params, kinect.ir_camera_params)
+#registration = pyfreenect2.Registration()
 
 # Initialize OpenCV stuff
 cv2.startWindowThread()
@@ -43,14 +50,19 @@ cv2.namedWindow("RGB")
 
 # Main loop
 while not shutdown:
+        print "waiting for frame"
 	frames = frameListener.waitForNewFrame()
+        print "got frame"
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
-	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
-	depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
+#	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
+#	depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
+
+        data = rgbFrame.getData()
 
 	# TODO Display the frames w/ OpenCV
-	cv2.imshow("RGB", rgbFrame.getData())
-    # cv::imshow("rgb", cv::Mat(rgb->height, rgb->width, CV_8UC3, rgb->data));
+	cv2.imshow("RGB", data)
+        cv2.waitKey(20)
+
     # cv::imshow("ir", cv::Mat(ir->height, ir->width, CV_32FC1, ir->data) / 20000.0f);
     # cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
 

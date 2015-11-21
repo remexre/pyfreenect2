@@ -36,6 +36,7 @@ class Freenect2Device:
 		if not isinstance(listener, SyncMultiFrameListener):
 			raise TypeError("Argument to Freenect2Device.setColorFrameListener must be of type Freenect2Device.SyncMultiFrameListener")
 		else:
+                        print "listener capsule : " , listener._capsule
 			_pyfreenect2.Freenect2Device_setColorFrameListener(self._capsule, listener._capsule)
 	def setIrAndDepthFrameListener(self, listener):
 		if not isinstance(listener, SyncMultiFrameListener):
@@ -68,14 +69,12 @@ class SyncMultiFrameListener:
 	def waitForNewFrame(self):
 		return FrameMap(_pyfreenect2.SyncMultiFrameListener_waitForNewFrame(self._capsule))
 
-
 ################################################################################
 #                                   FrameMap                                   #
 ################################################################################
 
 class FrameMap:
 	def __init__(self, capsule):
-		print "DEBUG: FrameMap capsule type = %s" % type(capsule)
 		self._capsule = capsule
 	def getFrame(self, frame_type):
 		if not frame_type in (1, 2, 4):
