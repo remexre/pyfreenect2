@@ -1,4 +1,45 @@
 import _pyfreenect2
+from collections import namedtuple
+
+ExtractedKinectFrame = namedtuple("ExtractedKinectFrame",
+                                  ['RGB', 'IR', 'DEPTH'])
+class PyFreeNect2(object):
+        def __init__(self):
+
+
+                self.serialNumber = getDefaultDeviceSerialNumber()
+                self.kinect = Freenect2Device(self.serialNumber)
+
+                self.frameListener = SyncMultiFrameListener(Frame.COLOR,
+                                                            Frame.IR,
+                                                            Frame.DEPTH)
+                self.kinect.setColorFrameListener(self.frameListener)
+                self.kinect.setIrAndDepthFrameListener(self.frameListener)
+                self.kinect.start()
+                self.registration = Registration(self.kinect.ir_camera_params, 
+                                                 self.kinect.color_camera_params)
+                print "%s setup done" % (self.__class__.__name__)
+
+        def get_new_frame(self):
+                frames = self.frameListener.waitForNewFrame()
+                rgbFrame = frames.getFrame(Frame.COLOR)
+                depthFrame = frames.getFrame(Frame.DEPTH)
+
+                rgb_frame = rgbFrame.getRGBData()
+
+                depth_frame = depthFrame.getDepthData()
+
+                ## TODO :: IR
+                ext_k =ExtractedKinectFrame(RGB = rgb_frame,
+                                            DEPTH = depth_frame,
+                                            IR = None)
+                return ext_k
+
+        def __del__(self):
+                self.kinect.stop()
+
+                ## todo :: call close method? was in original pyfreect test.py
+                #self.kinect.close()
 
 class PyFreenect2Error(Exception):
 	def __init__(self, message):
@@ -91,18 +132,17 @@ class Frame:
 	IR = 2
 	DEPTH = 4
 	def __init__(self, capsule):
-		print "DEBUG: Frame capsule type = %s" % type(capsule)
 		self._capsule = capsule
 	def getHeight(self):
 		return _pyfreenect2.Frame_getHeight(self._capsule)
 	def getWidth(self):
 		return _pyfreenect2.Frame_getWidth(self._capsule)
 	def getRGBData(self):
-                print "getting data"
-		return _pyfreenect2.Frame_getData(self._capsule)
+                ## todo fix copy necessity (reference counting to frame)
+		return _pyfreenect2.Frame_getData(self._capsule).copy()
 	def getDepthData(self):
-                print "getting data"
-		return _pyfreenect2.Frame_getDepthData(self._capsule)
+                ## todo fix copy necessity (reference counting to frame)                
+		return _pyfreenect2.Frame_getDepthData(self._capsule).copy()
 
 ################################################################################
 #                                 Registration                                 #

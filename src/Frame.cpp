@@ -55,7 +55,6 @@ PyObject *py_Frame_getDepthData(PyObject *self, PyObject *args)
 
 	import_array();
 
-	std::cout << "bpp: " << frame->bytes_per_pixel << std::endl;
 	PyArrayObject *array = (PyArrayObject*) PyArray_SimpleNewFromData(3, 
 									  dims, 
 									  NPY_UINT8,

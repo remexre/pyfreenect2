@@ -34,11 +34,10 @@ static PyMethodDef pyfreenect2Methods[] = {
 
 PyMODINIT_FUNC init_pyfreenect2() {
 
+  /// enables debug of libfreenect2
+  ///libfreenect2::setGlobalLogger(libfreenect2::createConsoleLogger(libfreenect2::Logger::Debug));
 
-	libfreenect2::setGlobalLogger(libfreenect2::createConsoleLogger(libfreenect2::Logger::Debug));
-
-	import_array();
-	Py_InitModule("_pyfreenect2", pyfreenect2Methods);
-	import_array();
-
+  import_array();
+  Py_InitModule("_pyfreenect2", pyfreenect2Methods);
+  import_array();
 }
