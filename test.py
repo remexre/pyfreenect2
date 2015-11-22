@@ -50,9 +50,7 @@ cv2.namedWindow("Depth")
 
 # Main loop
 while not shutdown:
-        print "waiting for frame"
 	frames = frameListener.waitForNewFrame()
-        print "got frame"
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
 #	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
         depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)

@@ -1,4 +1,5 @@
 import _pyfreenect2
+import numpy as np
 from collections import namedtuple
 
 ExtractedKinectFrame = namedtuple("ExtractedKinectFrame",
@@ -54,6 +55,7 @@ class DeveloperIsALazyBastardError(Exception):
 
 def numberOfDevices():
 	return _pyfreenect2.numberOfDevices()
+
 def getDefaultDeviceSerialNumber():
 	if numberOfDevices() == 0:
 		raise PyFreenect2Error("Could not find a Kinect v2")
@@ -139,10 +141,12 @@ class Frame:
 		return _pyfreenect2.Frame_getWidth(self._capsule)
 	def getRGBData(self):
                 ## todo fix copy necessity (reference counting to frame)
-		return _pyfreenect2.Frame_getData(self._capsule).copy()
+                ## todo fix fliplr necessity
+		return np.fliplr(_pyfreenect2.Frame_getData(self._capsule).copy())
 	def getDepthData(self):
                 ## todo fix copy necessity (reference counting to frame)                
-		return _pyfreenect2.Frame_getDepthData(self._capsule).copy()
+                ## todo fix fliplr necessity
+		return np.fliplr(_pyfreenect2.Frame_getDepthData(self._capsule).copy())
 
 ################################################################################
 #                                 Registration                                 #

@@ -2,7 +2,7 @@ import pyfreenect2
 import cv2
 import scipy.misc
 import signal
-
+import numpy as np
 
 pf = pyfreenect2.PyFreeNect2()
 
