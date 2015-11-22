@@ -56,14 +56,18 @@ while not shutdown:
         depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
 
         rgb_frame = rgbFrame.getRGBData()
+        bgr_frame = rgb_frame.copy()
+        bgr_frame[:,:,0] = rgb_frame[:,:,2]
+        bgr_frame[:,:,2] = rgb_frame[:,:,0]
+
         depth_frame = depthFrame.getDepthData()
 #        depth_frame = frames.getFrame(pyfreenect2.Frame.DEPTH).getData()
 
-        rgb_frame_resize = scipy.misc.imresize(rgb_frame, size = .5)
+        bgr_frame_resize = scipy.misc.imresize(bgr_frame, size = .5)
         depth_frame_resize = scipy.misc.imresize(depth_frame, size = .5)
 
 	# TODO Display the frames w/ OpenCV
-	cv2.imshow("RGB", rgb_frame_resize)
+	cv2.imshow("RGB", bgr_frame_resize)
 	cv2.imshow("Depth", depth_frame_resize)
         cv2.waitKey(20)
 

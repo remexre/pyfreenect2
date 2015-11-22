@@ -3,7 +3,14 @@ import numpy as np
 from collections import namedtuple
 
 ExtractedKinectFrame = namedtuple("ExtractedKinectFrame",
-                                  ['RGB', 'IR', 'DEPTH'])
+                                  ['RGB', 'BGR', 'IR', 'DEPTH'])
+
+def swap_c0c2(a):
+        a2 = a.copy()
+        a2[:,:,0] = a[:,:,2]
+        a2[:,:,2] = a[:,:,0]
+        return a2
+
 class PyFreeNect2(object):
         def __init__(self):
 
@@ -21,17 +28,22 @@ class PyFreeNect2(object):
                                                  self.kinect.color_camera_params)
                 print "%s setup done" % (self.__class__.__name__)
 
-        def get_new_frame(self):
+        def get_new_frame(self, get_BGR = False):
                 frames = self.frameListener.waitForNewFrame()
                 rgbFrame = frames.getFrame(Frame.COLOR)
                 depthFrame = frames.getFrame(Frame.DEPTH)
 
                 rgb_frame = rgbFrame.getRGBData()
+                #rgb_to_bgr(rgb_frame)
+                #bgr_to_rgb(rgb_frame)
 
                 depth_frame = depthFrame.getDepthData()
 
+                bgr_frame = swap_c0c2(rgb_frame) if get_BGR else None
+
                 ## TODO :: IR
                 ext_k =ExtractedKinectFrame(RGB = rgb_frame,
+                                            BGR = bgr_frame,
                                             DEPTH = depth_frame,
                                             IR = None)
                 return ext_k
@@ -142,7 +154,11 @@ class Frame:
 	def getRGBData(self):
                 ## todo fix copy necessity (reference counting to frame)
                 ## todo fix fliplr necessity
-		return np.fliplr(_pyfreenect2.Frame_getData(self._capsule).copy())
+                ## todo fix BGR :/
+		BGR = np.fliplr(_pyfreenect2.Frame_getData(self._capsule).copy())
+                RGB = swap_c0c2(BGR)
+                return RGB
+                                
 	def getDepthData(self):
                 ## todo fix copy necessity (reference counting to frame)                
                 ## todo fix fliplr necessity
