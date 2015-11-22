@@ -1,4 +1,5 @@
 #include "pyfreenect2.hpp"
+#include <iostream>
 
 static PyMethodDef pyfreenect2Methods[] = {
 	// Freenect2
@@ -26,11 +27,17 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "Frame_getHeight", py_Frame_getHeight, METH_VARARGS, NULL },
 	{ "Frame_getWidth", py_Frame_getWidth, METH_VARARGS, NULL },
 	{ "Frame_getData", py_Frame_getData, METH_VARARGS, NULL },
+	{ "Frame_getDepthData", py_Frame_getDepthData, METH_VARARGS, NULL },
 	// Sentinel
 	{ NULL, NULL, 0, NULL}
 };
 
 PyMODINIT_FUNC init_pyfreenect2() {
-	Py_InitModule("_pyfreenect2", pyfreenect2Methods);
-	import_array();
+
+  /// enables debug of libfreenect2
+  ///libfreenect2::setGlobalLogger(libfreenect2::createConsoleLogger(libfreenect2::Logger::Debug));
+
+  import_array();
+  Py_InitModule("_pyfreenect2", pyfreenect2Methods);
+  import_array();
 }

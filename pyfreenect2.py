@@ -1,4 +1,58 @@
 import _pyfreenect2
+import numpy as np
+from collections import namedtuple
+
+ExtractedKinectFrame = namedtuple("ExtractedKinectFrame",
+                                  ['RGB', 'BGR', 'IR', 'DEPTH'])
+
+def swap_c0c2(a):
+        a2 = a.copy()
+        a2[:,:,0] = a[:,:,2]
+        a2[:,:,2] = a[:,:,0]
+        return a2
+
+class PyFreeNect2(object):
+        def __init__(self):
+
+
+                self.serialNumber = getDefaultDeviceSerialNumber()
+                self.kinect = Freenect2Device(self.serialNumber)
+
+                self.frameListener = SyncMultiFrameListener(Frame.COLOR,
+                                                            Frame.IR,
+                                                            Frame.DEPTH)
+                self.kinect.setColorFrameListener(self.frameListener)
+                self.kinect.setIrAndDepthFrameListener(self.frameListener)
+                self.kinect.start()
+                self.registration = Registration(self.kinect.ir_camera_params, 
+                                                 self.kinect.color_camera_params)
+                print "%s setup done" % (self.__class__.__name__)
+
+        def get_new_frame(self, get_BGR = False):
+                frames = self.frameListener.waitForNewFrame()
+                rgbFrame = frames.getFrame(Frame.COLOR)
+                depthFrame = frames.getFrame(Frame.DEPTH)
+
+                rgb_frame = rgbFrame.getRGBData()
+                #rgb_to_bgr(rgb_frame)
+                #bgr_to_rgb(rgb_frame)
+
+                depth_frame = depthFrame.getDepthData()
+
+                bgr_frame = swap_c0c2(rgb_frame) if get_BGR else None
+
+                ## TODO :: IR
+                ext_k =ExtractedKinectFrame(RGB = rgb_frame,
+                                            BGR = bgr_frame,
+                                            DEPTH = depth_frame,
+                                            IR = None)
+                return ext_k
+
+        def __del__(self):
+                self.kinect.stop()
+
+                ## todo :: call close method? was in original pyfreect test.py
+                #self.kinect.close()
 
 class PyFreenect2Error(Exception):
 	def __init__(self, message):
@@ -13,6 +67,7 @@ class DeveloperIsALazyBastardError(Exception):
 
 def numberOfDevices():
 	return _pyfreenect2.numberOfDevices()
+
 def getDefaultDeviceSerialNumber():
 	if numberOfDevices() == 0:
 		raise PyFreenect2Error("Could not find a Kinect v2")
@@ -36,6 +91,7 @@ class Freenect2Device:
 		if not isinstance(listener, SyncMultiFrameListener):
 			raise TypeError("Argument to Freenect2Device.setColorFrameListener must be of type Freenect2Device.SyncMultiFrameListener")
 		else:
+                        print "listener capsule : " , listener._capsule
 			_pyfreenect2.Freenect2Device_setColorFrameListener(self._capsule, listener._capsule)
 	def setIrAndDepthFrameListener(self, listener):
 		if not isinstance(listener, SyncMultiFrameListener):
@@ -68,14 +124,12 @@ class SyncMultiFrameListener:
 	def waitForNewFrame(self):
 		return FrameMap(_pyfreenect2.SyncMultiFrameListener_waitForNewFrame(self._capsule))
 
-
 ################################################################################
 #                                   FrameMap                                   #
 ################################################################################
 
 class FrameMap:
 	def __init__(self, capsule):
-		print "DEBUG: FrameMap capsule type = %s" % type(capsule)
 		self._capsule = capsule
 	def getFrame(self, frame_type):
 		if not frame_type in (1, 2, 4):
@@ -92,14 +146,23 @@ class Frame:
 	IR = 2
 	DEPTH = 4
 	def __init__(self, capsule):
-		print "DEBUG: Frame capsule type = %s" % type(capsule)
 		self._capsule = capsule
 	def getHeight(self):
 		return _pyfreenect2.Frame_getHeight(self._capsule)
 	def getWidth(self):
 		return _pyfreenect2.Frame_getWidth(self._capsule)
-	def getData(self):
-		return _pyfreenect2.Frame_getData(self._capsule)
+	def getRGBData(self):
+                ## todo fix copy necessity (reference counting to frame)
+                ## todo fix fliplr necessity
+                ## todo fix BGR :/
+		BGR = np.fliplr(_pyfreenect2.Frame_getData(self._capsule).copy())
+                RGB = swap_c0c2(BGR)
+                return RGB
+                                
+	def getDepthData(self):
+                ## todo fix copy necessity (reference counting to frame)                
+                ## todo fix fliplr necessity
+		return np.fliplr(_pyfreenect2.Frame_getDepthData(self._capsule).copy())
 
 ################################################################################
 #                                 Registration                                 #
