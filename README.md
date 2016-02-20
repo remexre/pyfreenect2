@@ -8,7 +8,8 @@ Requirements
 
 - Python2 (python3 support coming)
 - numpy
-- scipy (as appropriated by your python version)
+- scipy (as appropriated by python version) : 
+- Python Imaging Library (used for scipy.misc.im* functions) : http://www.pythonware.com/products/pil/
 - openCV
 
 Installation
