@@ -26,7 +26,7 @@ For usage, see `test.py`.
 TODO List
 ---------
 
-__ * Make `test.py` actually display the frames __
+~~  * Make `test.py` actually display the frames ~~
  * Implement Registration.apply (in py_Registration_apply)
  * Make the pipeline argument of Freenect2Device's constructor actually do something
  * Test everything
