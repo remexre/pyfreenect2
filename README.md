@@ -6,7 +6,7 @@ Python bindings to [libfreenect2](https://github.com/OpenKinect/libfreenect2).
 Requirements
 ---------
 
-- Python2 (python3 support coming)
+- Python2 (python3 support : https://github.com/LovelyHorse/py3freenect2)
 - Numpy
 - Scipy (as appropriated by python version) : 
 - Python Imaging Library (used for scipy.misc.im* functions) : http://www.pythonware.com/products/pil/
@@ -26,7 +26,7 @@ For usage, see `test.py`.
 TODO List
 ---------
 
- * Make `test.py` actually display the frames
+-- * Make `test.py` actually display the frames --
  * Implement Registration.apply (in py_Registration_apply)
  * Make the pipeline argument of Freenect2Device's constructor actually do something
  * Test everything
