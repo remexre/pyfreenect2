@@ -15,7 +15,7 @@ kinect = pyfreenect2.Freenect2Device(serialNumber)
 # Set up signal handler
 shutdown = False
 def sigint_handler(signum, frame):
-	print("Got SIGINT, shutting down...")
+	print "Got SIGINT, shutting down..."
 	shutdown = True
 signal.signal(signal.SIGINT, sigint_handler)
 
@@ -24,7 +24,7 @@ frameListener = pyfreenect2.SyncMultiFrameListener(pyfreenect2.Frame.COLOR,
 	pyfreenect2.Frame.IR,
 	pyfreenect2.Frame.DEPTH)
 
-print(frameListener)
+print frameListener
 kinect.setColorFrameListener(frameListener)
 kinect.setIrAndDepthFrameListener(frameListener)
 
@@ -32,11 +32,11 @@ kinect.setIrAndDepthFrameListener(frameListener)
 kinect.start()
 
 # Print useful info
-print("Kinect serial: %s" % kinect.serial_number)
-print("Kinect firmware: %s" % kinect.firmware_version)
+print "Kinect serial: %s" % kinect.serial_number
+print "Kinect firmware: %s" % kinect.firmware_version
 
 # What's a registration?
-print(kinect.ir_camera_params)
+print kinect.ir_camera_params
 
 registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_camera_params)
 #registration = pyfreenect2.Registration(kinect.color_camera_params, kinect.ir_camera_params)
@@ -51,24 +51,24 @@ cv2.namedWindow("Depth")
 while not shutdown:
 	frames = frameListener.waitForNewFrame()
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
-	# irFrame = frames.getFrame(pyfreenect2.Frame.IR)
-	depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
+#	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
+        depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
 
-	rgb_frame = rgbFrame.getRGBData()
-	bgr_frame = rgb_frame.copy()
-	bgr_frame[:,:,0] = rgb_frame[:,:,2]
-	bgr_frame[:,:,2] = rgb_frame[:,:,0]
+        rgb_frame = rgbFrame.getRGBData()
+        bgr_frame = rgb_frame.copy()
+        bgr_frame[:,:,0] = rgb_frame[:,:,2]
+        bgr_frame[:,:,2] = rgb_frame[:,:,0]
 
-	depth_frame = depthFrame.getDepthData()
-	# depth_frame = frames.getFrame(pyfreenect2.Frame.DEPTH).getData()
+        depth_frame = depthFrame.getDepthData()
+#        depth_frame = frames.getFrame(pyfreenect2.Frame.DEPTH).getData()
 
-	bgr_frame_resize = scipy.misc.imresize(bgr_frame, size = .5)
-	depth_frame_resize = scipy.misc.imresize(depth_frame, size = .5)
+        bgr_frame_resize = scipy.misc.imresize(bgr_frame, size = .5)
+        depth_frame_resize = scipy.misc.imresize(depth_frame, size = .5)
 
 	# TODO Display the frames w/ OpenCV
 	cv2.imshow("RGB", bgr_frame_resize)
 	cv2.imshow("Depth", depth_frame_resize)
-	cv2.waitKey(20)
+        cv2.waitKey(20)
 
 kinect.stop()
 kinect.close()
