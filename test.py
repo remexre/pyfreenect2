@@ -1,6 +1,6 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 
-import cv2, cv
+import cv2
 import scipy.misc
 import signal
 import pyfreenect2
@@ -43,7 +43,6 @@ registration = pyfreenect2.Registration(kinect.ir_camera_params, kinect.color_ca
 #registration = pyfreenect2.Registration()
 
 # Initialize OpenCV stuff
-cv2.startWindowThread()
 cv2.namedWindow("RGB")
 # cv2.namedWindow("IR")
 cv2.namedWindow("Depth")
