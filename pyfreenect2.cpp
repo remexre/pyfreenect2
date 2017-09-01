@@ -18,6 +18,7 @@ static PyMethodDef pyfreenect2Methods[] = {
 	// SyncMultiFrameListener
 	{ "SyncMultiFrameListener_new", py_SyncMultiFrameListener_new, METH_VARARGS, NULL },
 	{ "SyncMultiFrameListener_waitForNewFrame", py_SyncMultiFrameListener_waitForNewFrame, METH_VARARGS, NULL },
+	{ "SyncMultiFrameListener_release", py_SyncMultiFrameListener_release, METH_VARARGS, NULL },
 	// Registration
 	{ "Registration_new", py_Registration_new, METH_VARARGS, NULL },
 	{ "Registration_apply", py_Registration_apply, METH_VARARGS, NULL },

@@ -53,7 +53,6 @@ while not shutdown:
 	rgbFrame = frames.getFrame(pyfreenect2.Frame.COLOR)
 #	irFrame = frames.getFrame(pyfreenect2.Frame.IR)
         depthFrame = frames.getFrame(pyfreenect2.Frame.DEPTH)
-
         rgb_frame = rgbFrame.getRGBData()
         bgr_frame = rgb_frame.copy()
         bgr_frame[:,:,0] = rgb_frame[:,:,2]
@@ -69,6 +68,7 @@ while not shutdown:
 	cv2.imshow("RGB", bgr_frame_resize)
 	cv2.imshow("Depth", depth_frame_resize)
         cv2.waitKey(20)
+        frameListener.release(frames)
 
 kinect.stop()
 kinect.close()

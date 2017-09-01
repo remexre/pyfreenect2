@@ -46,6 +46,7 @@ class PyFreeNect2(object):
                                             BGR = bgr_frame,
                                             DEPTH = depth_frame,
                                             IR = None)
+                self.frameListener.release(frames)
                 return ext_k
 
         def __del__(self):
@@ -84,7 +85,7 @@ class Freenect2Device:
 			raise DeveloperIsALazyBastardError("pyfreenect2.PacketPipeline is not yet implemented")
 		self._capsule = _pyfreenect2.Freenect2Device_new(serialNumber)
 	def start(self):
-		_pyfreenect2.Freenect2Device_start(self._capsule)
+		return _pyfreenect2.Freenect2Device_start(self._capsule)
 	def stop(self):
 		_pyfreenect2.Freenect2Device_stop(self._capsule)
 	def setColorFrameListener(self, listener):
@@ -123,6 +124,8 @@ class SyncMultiFrameListener:
 		self._capsule = _pyfreenect2.SyncMultiFrameListener_new(types)
 	def waitForNewFrame(self):
 		return FrameMap(_pyfreenect2.SyncMultiFrameListener_waitForNewFrame(self._capsule))
+	def release(self,frames):
+		_pyfreenect2.SyncMultiFrameListener_release(self._capsule,frames._capsule)
 
 ################################################################################
 #                                   FrameMap                                   #
