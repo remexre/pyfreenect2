@@ -16,6 +16,7 @@ kinect = pyfreenect2.Freenect2Device(serialNumber)
 shutdown = False
 def sigint_handler(signum, frame):
 	print "Got SIGINT, shutting down..."
+	global shutdown
 	shutdown = True
 signal.signal(signal.SIGINT, sigint_handler)
 
@@ -71,4 +72,3 @@ while not shutdown:
         frameListener.release(frames)
 
 kinect.stop()
-kinect.close()
