@@ -157,17 +157,15 @@ class Frame:
 	def getWidth(self):
 		return _pyfreenect2.Frame_getWidth(self._capsule)
 	def getRGBData(self):
-                ## todo fix copy necessity (reference counting to frame)
                 ## todo fix fliplr necessity
                 ## todo fix BGR :/
-		BGR = np.fliplr(_pyfreenect2.Frame_getData(self._capsule).copy())
+		BGR = np.fliplr(_pyfreenect2.Frame_getData(self._capsule))
                 RGB = swap_c0c2(BGR)
                 return RGB
                                 
-	def getDepthData(self):
-                ## todo fix copy necessity (reference counting to frame)                
+	def getDepthData(self):              
                 ## todo fix fliplr necessity
-		return np.fliplr(_pyfreenect2.Frame_getDepthData(self._capsule).copy())
+		return np.fliplr(_pyfreenect2.Frame_getDepthData(self._capsule))
 
 ################################################################################
 #                                 Registration                                 #
