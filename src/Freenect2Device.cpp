@@ -27,11 +27,21 @@ PyObject *py_Freenect2Device_start(PyObject *self, PyObject *args) {
 	}
 	Py_RETURN_FALSE;
 }
+
 PyObject *py_Freenect2Device_stop(PyObject *self, PyObject *args) {
 	PyObject *deviceCapsule = NULL;
 	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
 		return NULL;
 	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->stop();
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
+PyObject *py_Freenect2Device_close(PyObject *self, PyObject *args) {
+	PyObject *deviceCapsule = NULL;
+	if(!PyArg_ParseTuple(args, "O", &deviceCapsule))
+		return NULL;
+	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->close();
 	Py_INCREF(Py_None);
 	return Py_None;
 }

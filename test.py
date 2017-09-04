@@ -72,3 +72,4 @@ while not shutdown:
         frameListener.release(frames)
 
 kinect.stop()
+kinect.close()
