@@ -88,6 +88,8 @@ class Freenect2Device:
 		return _pyfreenect2.Freenect2Device_start(self._capsule)
 	def stop(self):
 		_pyfreenect2.Freenect2Device_stop(self._capsule)
+	def close(self):
+		_pyfreenect2.Freenect2Device_close(self._capsule)
 	def setColorFrameListener(self, listener):
 		if not isinstance(listener, SyncMultiFrameListener):
 			raise TypeError("Argument to Freenect2Device.setColorFrameListener must be of type Freenect2Device.SyncMultiFrameListener")

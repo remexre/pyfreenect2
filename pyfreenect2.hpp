@@ -26,6 +26,7 @@ void py_Freenect2Device_destroy(PyObject *deviceCapsule);
 
 PyObject *py_Freenect2Device_start(PyObject *self, PyObject *args);
 PyObject *py_Freenect2Device_stop(PyObject *self, PyObject *args);
+PyObject *py_Freenect2Device_close(PyObject *self, PyObject *args);
 
 PyObject *py_Freenect2Device_setColorFrameListener(PyObject *self, PyObject *args);
 PyObject *py_Freenect2Device_setIrAndDepthFrameListener(PyObject *self, PyObject *args);

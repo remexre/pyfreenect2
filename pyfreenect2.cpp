@@ -9,6 +9,7 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "Freenect2Device_new", py_Freenect2Device_new, METH_VARARGS, NULL },
 	{ "Freenect2Device_start", py_Freenect2Device_start, METH_VARARGS, NULL },
 	{ "Freenect2Device_stop", py_Freenect2Device_stop, METH_VARARGS, NULL },
+	{ "Freenect2Device_close", py_Freenect2Device_close, METH_VARARGS, NULL },
 	{ "Freenect2Device_setColorFrameListener", py_Freenect2Device_setColorFrameListener, METH_VARARGS, NULL },
 	{ "Freenect2Device_setIrAndDepthFrameListener", py_Freenect2Device_setIrAndDepthFrameListener, METH_VARARGS, NULL },
 	{ "Freenect2Device_getSerialNumber", py_Freenect2Device_getSerialNumber, METH_VARARGS, NULL },
