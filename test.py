@@ -28,6 +28,7 @@ frameListener = pyfreenect2.SyncMultiFrameListener(pyfreenect2.Frame.COLOR,
 print frameListener
 kinect.setColorFrameListener(frameListener)
 kinect.setIrAndDepthFrameListener(frameListener)
+kinect.setDeepConfiguration(pyfreenect2.DeepConfig(MinDepth=.5,MaxDepth=10,EnableBilateralFilter=True,EnableEdgeAwareFilter=True))
 
 # Start recording
 kinect.start()

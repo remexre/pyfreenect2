@@ -1,6 +1,8 @@
 import _pyfreenect2
 import numpy as np
 from collections import namedtuple
+from ctypes import *  
+import types 
 
 ExtractedKinectFrame = namedtuple("ExtractedKinectFrame",
                                   ['RGB', 'BGR', 'IR', 'DEPTH'])
@@ -79,6 +81,9 @@ def getDefaultDeviceSerialNumber():
 #                                Freenect2Device                               #
 ################################################################################
 
+class DeepConfig(Structure):  
+    _fields_ = [("MinDepth", c_float), ("MaxDepth", c_float),("EnableBilateralFilter", c_bool),("EnableEdgeAwareFilter", c_bool)]  
+
 class Freenect2Device:
 	def __init__(self, serialNumber, pipeline=None):
 		if pipeline is not None:
@@ -101,6 +106,13 @@ class Freenect2Device:
 			raise TypeError("Argument to Freenect2Device.setIrAndDepthFrameListener must be of type Freenect2Device.SyncMultiFrameListener")
 		else:
 			_pyfreenect2.Freenect2Device_setIrAndDepthFrameListener(self._capsule, listener._capsule)
+
+	def setDeepConfiguration(self, conf):
+		if not isinstance(conf, DeepConfig):
+			raise TypeError("Argument to Freenect2Device.setConfig must be of type Freenect2Device.DeepConfig")
+		else:
+			_pyfreenect2.Freenect2Device_setDeepConfiguration(self._capsule, conf)
+	
 	@property
 	def serial_number(self):
 		return _pyfreenect2.Freenect2Device_getSerialNumber(self._capsule)

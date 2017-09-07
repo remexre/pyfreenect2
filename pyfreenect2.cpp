@@ -12,6 +12,8 @@ static PyMethodDef pyfreenect2Methods[] = {
 	{ "Freenect2Device_close", py_Freenect2Device_close, METH_VARARGS, NULL },
 	{ "Freenect2Device_setColorFrameListener", py_Freenect2Device_setColorFrameListener, METH_VARARGS, NULL },
 	{ "Freenect2Device_setIrAndDepthFrameListener", py_Freenect2Device_setIrAndDepthFrameListener, METH_VARARGS, NULL },
+	/** Configure depth processing. */
+	{ "Freenect2Device_setDeepConfiguration", py_Freenect2Device_setDeepConfiguration, METH_VARARGS, NULL },
 	{ "Freenect2Device_getSerialNumber", py_Freenect2Device_getSerialNumber, METH_VARARGS, NULL },
 	{ "Freenect2Device_getFirmwareVersion", py_Freenect2Device_getFirmwareVersion, METH_VARARGS, NULL },
 	{ "Freenect2Device_getColorCameraParams", py_Freenect2Device_getColorCameraParams, METH_VARARGS, NULL },

@@ -13,6 +13,7 @@ PyObject *py_Freenect2Device_new(PyObject *self, PyObject *args) {
 	Freenect2Device *device = getGlobalFreenect2().openDevice(serialNumber);
 	return PyCapsule_New(device, "Freenect2Device", py_Freenect2Device_destroy);
 }
+
 void py_Freenect2Device_destroy(PyObject *deviceCapsule) {
 	((Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device"))->close();
 }
@@ -64,6 +65,26 @@ PyObject *py_Freenect2Device_setColorFrameListener(PyObject *self, PyObject *arg
 	Py_INCREF(Py_None);
 	return Py_None;
 }
+
+PyObject *py_Freenect2Device_setDeepConfiguration(PyObject *self, PyObject *args){
+	PyObject *deviceCapsule = NULL;
+	struct libfreenect2::Freenect2Device::Config *conf = NULL;
+	size_t size;
+	if(!PyArg_ParseTuple(args, "Ow#", &deviceCapsule, &conf,&size))
+		return NULL;
+	if (size < sizeof(struct libfreenect2::Freenect2Device::Config)) {
+		PyErr_SetString(PyExc_TypeError, "wrong buffer size");
+		return NULL;
+	}
+	Freenect2Device *device = (Freenect2Device*) PyCapsule_GetPointer(deviceCapsule, "Freenect2Device");
+
+	Py_INCREF(conf);
+	device->setConfiguration(*conf);
+	Py_DECREF(conf);
+	Py_INCREF(Py_None);
+	return Py_None;
+}
+
 PyObject *py_Freenect2Device_setIrAndDepthFrameListener(PyObject *self, PyObject *args) {
 	PyObject *deviceCapsule = NULL;
 	PyObject *listenerCapsule = NULL;
