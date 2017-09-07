@@ -30,6 +30,8 @@ PyObject *py_Freenect2Device_close(PyObject *self, PyObject *args);
 
 PyObject *py_Freenect2Device_setColorFrameListener(PyObject *self, PyObject *args);
 PyObject *py_Freenect2Device_setIrAndDepthFrameListener(PyObject *self, PyObject *args);
+/** Configure depth processing. */
+PyObject *py_Freenect2Device_setDeepConfiguration(PyObject *self, PyObject *args);
 
 PyObject *py_Freenect2Device_getSerialNumber(PyObject *self, PyObject *args);
 PyObject *py_Freenect2Device_getFirmwareVersion(PyObject *self, PyObject *args);
